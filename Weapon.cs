@@ -4,38 +4,35 @@ namespace Weapon
 {
     class Weapon : IWeapon
     {
-        private int _damage;
-        private int _bullets;
-
         public Weapon(int damage, int bullet)
         {
-            ConfirmPositive(_damage);
-            ConfirmPositive(_bullets);
+            ConfirmPositive(Damage);
+            ConfirmPositive(Bullets);
 
-            _damage = damage;   
-            _bullets = bullet;
+            Damage = damage;   
+            Bullets = bullet;
         }
 
-        public int Damage => _damage;
-        public int Bullets => _bullets;
+        public int Damage { get; private set; }
+        public int Bullets { get; private set; }
 
         public void Fire(Player player)
         {
             if (player == null)
                 throw new InvalidOperationException("Target is null");
 
-            if (_bullets == 0)
-                return;
+            if (Bullets == 0)
+                throw new InvalidOperationException("No bullets");
 
-            player.TakeDamage(_damage);
+            player.TakeDamage(Damage);
 
-            _bullets --;
+            Bullets --;
         }
 
         private void ConfirmPositive (int value)
         {
             if (value < 0)
-                throw new InvalidOperationException(nameof(value));
+                throw new InvalidOperationException($"{nameof(value)} < 0");
         }
     }
 }

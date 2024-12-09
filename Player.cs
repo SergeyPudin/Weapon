@@ -4,24 +4,25 @@ namespace Weapon
 {
     class Player
     {
-        private int _health;
-
         public Player(int health)
         {
-            _health = health;
+            Health = health;
 
-            if (_health <= 0)
-                throw new InvalidOperationException(nameof(_health));
+            if (Health <= 0)
+                throw new InvalidOperationException($"{nameof(Health)} <= 0");
         }
 
-        public int Health => _health;
+        public int Health { get; private set; }
 
         public void TakeDamage(int damage)
         {
-            _health -= damage;
+            if (damage < 0)
+                throw new InvalidOperationException($"{nameof(damage)} < 0");
 
-            if (_health < 0)
-                _health = 0;
+            Health -= damage;
+
+            if (Health < 0)
+                Health = 0;
         }
     }
 }
