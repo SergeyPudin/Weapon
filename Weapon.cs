@@ -7,10 +7,13 @@ namespace Weapon
         private int _damage;
         private int _bullets;
 
-        public Weapon()
+        public Weapon(int damage, int bullet)
         {
             ConfirmPositive(_damage);
             ConfirmPositive(_bullets);
+
+            _damage = damage;   
+            _bullets = bullet;
         }
 
         public int Damage => _damage;
@@ -18,12 +21,15 @@ namespace Weapon
 
         public void Fire(Player player)
         {
+            if (player == null)
+                throw new InvalidOperationException("Target is null");
+
             if (_bullets == 0)
                 return;
 
             player.TakeDamage(_damage);
 
-            _bullets -= 1;
+            _bullets --;
         }
 
         private void ConfirmPositive (int value)

@@ -6,8 +6,10 @@ namespace Weapon
     {
         private int _health;
 
-        public Player()
+        public Player(int health)
         {
+            _health = health;
+
             if (_health <= 0)
                 throw new InvalidOperationException(nameof(_health));
         }
